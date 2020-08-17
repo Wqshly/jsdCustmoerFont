@@ -227,7 +227,7 @@ export default {
     },
     getCode () {
       const TIME_COUNT = 60
-      this.$api.getRequestApi.get('/customer/verifyCode?phoneNum=' + this.codeLoginForm.phoneNumber)
+      this.$api.getRequestApi.get('/customer/getVerifyCode/this.codeLoginForm.phoneNumber')
         .then(res => {
           console.log(res.data)
           if (res.data === 200) {

@@ -28,7 +28,9 @@
                       clearable/>
           </el-form-item>
           <el-form-item label="性别:" prop="sex">
-            <el-select style="float: left" v-model="registerForm.sex" placeholder="请选择">
+            <el-select style="float: left"
+                       @click.native="getTypeOption('basicCoding/findBasicCodingWithType/genderCoding', 'gender')"
+                       v-model="registerForm.sex" placeholder="请选择">
               <el-option
                 v-for="item in optionTable.gender"
                 :key="item.id"
@@ -38,23 +40,12 @@
             </el-select>
           </el-form-item>
           <el-form-item label="用户头像:" prop="picLocal">
-            <el-upload
-              v-model="registerForm.picLocal"
-              accept="image/jpeg,image/png"
-              class="avatar-uploader"
-              name="picture"
-              action="http://localhost:8083/api/file/imageUpload"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :on-error="handleAvatarFailed"
-              :before-upload="beforeAvatarUpload">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+            <img-upload v-on:upload-pic="uploadPic"></img-upload>
           </el-form-item>
-          <el-form-item style="padding-right: 50px">
+          <el-form-item style="padding-right: 10px">
             <el-button type="primary" @click="submitForm('registerForm')">立即创建</el-button>
             <el-button @click="resetForm('register')">重置</el-button>
+            <el-button @click.native="companyRegister">企业用户?点此注册</el-button>
           </el-form-item>
         </el-form>
       </section>
@@ -63,7 +54,12 @@
 </template>
 
 <script>
+import ImgUpload from '@/components/ImgUpload'
+
 export default {
+  components: {
+    ImgUpload
+  },
   data () {
     const bgRegister = this.$img.bgRegister
     const isRegister = this.validPhoneNumber
@@ -125,6 +121,17 @@ export default {
     }
   },
   methods: {
+    async uploadPic (data) {
+      this.$api.requestApi.post('/customer/imageUpload/', data)
+        .then(res => {
+          console.log(res.data)
+          this.registerForm.picLocation = res.data.data
+          console.log(this.registerForm.picLocation)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     handleAvatarSuccess (res, file) {
       if (res) {
         console.log(file)
@@ -210,10 +217,13 @@ export default {
           }
         })
         .catch()
+    },
+    companyRegister () {
+      this.$router.push('/company_register')
     }
   },
   mounted () {
-    this.getTypeOption('basicCoding/findBasicCodingWithType' + '?type=' + this.typeName.gender, 'gender')
+    // this.getTypeOption('basicCoding/findBasicCodingWithType/genderCoding', 'gender')
   }
 }
 </script>

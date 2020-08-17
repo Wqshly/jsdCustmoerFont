@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       '/api': {
         // 这里是跨域链接
-        target: 'http://localhost:8080/jsd_war_exploded/',
+        target: 'http://localhost:8080/',
         logLevel: 'debug',
         changeOrigin: true,
         pathRewrite: {

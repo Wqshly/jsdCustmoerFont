@@ -12,6 +12,7 @@ import './assets/icon/iconfont.css'
 import api from './request/api/index'
 import img from './request/img/index'
 import md5 from 'js-md5'
+import VueCropper from 'vue-cropper'
 
 // 全局注册
 Vue.prototype.$api = api
@@ -19,7 +20,8 @@ Vue.prototype.$img = img
 Vue.prototype.$md5 = md5
 Vue.prototype.$axios = axios
 Vue.use(ElementUI)
-global.baseUrl = 'http://localhost:8080/jsd_war_exploded/'
+Vue.use(VueCropper)
+global.baseUrl = 'http://localhost:8080/'
 
 Vue.config.productionTip = false
 

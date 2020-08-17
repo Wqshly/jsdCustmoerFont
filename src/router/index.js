@@ -5,6 +5,7 @@ Vue.use(Router)
 
 const login = () => Promise.resolve(require('@/views/login'))
 const register = () => Promise.resolve(require('@/views/register'))
+const companyRegister = () => Promise.resolve(require('@/views/companyRegister'))
 const notFound = () => Promise.resolve(require('@/views/404'))
 
 const home = () => Promise.resolve(require('@/views/home'))
@@ -20,6 +21,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: register
+    },
+    {
+      path: '/company_register',
+      name: 'companyRegister',
+      component: companyRegister
     },
     {
       path: '/home',
